@@ -41,7 +41,14 @@ Product.init(
       model:"Category",
       key:"id"
     }
-  }
+  },
+  // productTag:{
+  //   type:DataTypes.INTEGER,
+  //   reference:{
+  //     model:"Tag",
+  //     key:"id"
+  //   }
+  // }
   },
   {
     sequelize,
