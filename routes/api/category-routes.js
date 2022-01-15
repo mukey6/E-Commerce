@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Category, Product } = require('../../models');
+const { Category, Product, ProductTag } = require('../../models');
 
 // The `/api/categories` endpoint
 
@@ -9,6 +9,12 @@ router.get('/', (req, res) => {
 attributes:[
   'id',
   'category_name'
+],
+include:[
+  {
+    model: Product,
+    attributes:["id", "product_name", "price", "stock", "category_id"]
+  }
 ]
   })
   .then((dbCategory) => res.json(dbCategory))
@@ -24,7 +30,14 @@ router.get('/:id', (req, res) => {
   Category.findOne({
     where:{
       id: req.params.id
-    }
+    },
+    include:[
+      { 
+        model: Product,
+      attributes:["id", "product_name", "price", "stock", "category_id"] 
+  }
+
+    ]
   }).then(categoryData =>{
     if(!categoryData){
       res.status(404).json({message: 'no category found'});
